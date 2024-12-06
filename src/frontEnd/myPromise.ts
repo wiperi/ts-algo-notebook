@@ -4,7 +4,7 @@ enum S {
   REJECTED = 'rejected',
 }
 
-function runAsync(func: any) {
+function asyncRun(func: () => void) {
   if (typeof queueMicrotask === 'function') {
     return queueMicrotask(func);
   } else {
@@ -21,7 +21,7 @@ class MyPromise {
     onRejected: (reason: any) => void;
   }[] = [];
 
-  constructor(func: (resolve: any, reject: any) => void) {
+  constructor(executor: (resolve: any, reject: any) => void) {
     const resolve = (value: any) => {
       if (this.state === S.PENDING) {
         this.state = S.FULFILLED;
@@ -42,27 +42,38 @@ class MyPromise {
         });
       }
     };
-    func(resolve, reject);
+
+    try {
+      executor(resolve, reject);
+    } catch (error) {
+      reject(error);
+    }
   }
 
   then(onFulfilled?: (value: any) => any, onRejected?: (reason: any) => any) {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val;
-    onRejected = typeof onRejected === 'function' ? onRejected : val => { throw val };
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : val => {
+            throw val;
+          };
 
-    let res;
     const newPromise = new MyPromise((resolve, reject) => {
-      if (this.state === S.FULFILLED) {
-        runAsync(() => {
+      /**
+       * Resolve new promise based on the return value of onFulfilled or onRejected
+       * @param func onFulfilled or onRejected
+       */
+      const resolveNewPromise = (func: (value: any) => any) => {
+        asyncRun(() => {
           try {
-            res = onFulfilled(this.value);
-            console.log('res', res);
-            console.log('newPromise', newPromise);
+            const res = func(this.value);
+
             if (res === newPromise) {
-              console.error('Chaining cycle detected');
               throw new TypeError('Chaining cycle detected');
-            }
-            // if res is a MyPromise, then get the value of the MyPromise
-            if (res instanceof MyPromise) {
+            } else if (res instanceof MyPromise) {
+              // Extract value from the returned Promise and use it to resolve the new Promise.
+              // res.then(onFulfilled = resolve, onRejected = reject)
               res.then(resolve, reject);
             } else {
               resolve(res);
@@ -71,51 +82,149 @@ class MyPromise {
             reject(error);
           }
         });
+      };
+
+      if (this.state === S.FULFILLED) {
+        resolveNewPromise(onFulfilled);
       } else if (this.state === S.REJECTED) {
-        runAsync(() => {
-          try {
-            res = onRejected(this.value);
-            if (res instanceof MyPromise) {
-              res.then(resolve, reject);
-            } else {
-              reject(res);
-            }
-          } catch (error) {
-            reject(error);
-          }
-        });
+        resolveNewPromise(onRejected);
       } else if (this.state === S.PENDING) {
-        this.callbacks.push({ onFulfilled, onRejected });
+        this.callbacks.push({
+          onFulfilled: () => resolveNewPromise(onFulfilled),
+          onRejected: () => resolveNewPromise(onRejected),
+        });
       }
     });
 
     return newPromise;
   }
 
-  catch(onRejected: (reason: any) => void) {
-    if (this.state === S.REJECTED && onRejected) {
-      onRejected(this.value);
-    }
+  catch(onRejected: (reason: any) => any) {
+    return this.then(undefined, onRejected);
   }
 
-  finally(onFinally: () => void) {}
+  finally(onFinally: () => any) {
+    return this.then(onFinally, onFinally);
+  }
+
+  static resolve(value: any) {
+    if (value instanceof MyPromise) {
+      return value;
+    }
+
+    return new MyPromise((resolve, reject) => {
+      resolve(value);
+    });
+  }
+
+  static reject(reason: any) {
+    return new MyPromise((resolve, reject) => {
+      reject(reason);
+    });
+  }
+
+  static race(promises: unknown[]) {
+    return new MyPromise((resolve, reject) => {
+      if (!Array.isArray(promises)) {
+        return reject(new TypeError(`${promises} is not iterable`));
+      }
+
+      promises.forEach(p => MyPromise.resolve(p).then(resolve, reject));
+    });
+  }
+
+  /**
+   * Return a promise that is resolved when all of the given promises are resolved.
+   * - If any of the promises is rejected, the returned promise is rejected. Reason is the same as the first rejected promise.
+   * - If all of the promises are fulfilled, the returned promise is fulfilled with its value being an array of the results of the input promises.
+   * - If given an empty array, resolve immediately.
+   * @param promises - An array of promises.
+   * @returns A promise that resolves to an array of the results of the input promises.
+   */
+  static all(promises: unknown[]) {
+    return new MyPromise((resolve, reject) => {
+      if (!Array.isArray(promises)) {
+        return reject(new TypeError(`${promises} is not iterable`));
+      }
+
+      promises.length === 0 && resolve(promises);
+
+      const results: any[] = [];
+      let count = 0;
+
+      promises.forEach((p, index) =>
+        MyPromise.resolve(p).then(res => {
+          results[index] = res;
+          count++;
+          count === promises.length && resolve(results);
+        }, reject)
+      );
+    });
+  }
+
+  static allSettled(promises: unknown[]) {
+    return new MyPromise((resolve, reject) => {
+      if (!Array.isArray(promises)) {
+        return reject(new TypeError(`${promises} is not iterable`));
+      }
+
+      promises.length === 0 && resolve(promises);
+
+      const results: any[] = [];
+      let count = 0;
+
+      promises.forEach((p, index) =>
+        MyPromise.resolve(p).then(
+          val => {
+            results[index] = {
+              status: S.FULFILLED,
+              value: val,
+            };
+            count++;
+            count === promises.length && resolve(results);
+          },
+          err => {
+            results[index] = {
+              status: S.REJECTED,
+              reason: err,
+            };
+            count++;
+            count === promises.length && resolve(results);
+          }
+        )
+      );
+    });
+  }
+
+  static any(promises: unknown[]) {
+    return new MyPromise((resolve, reject) => {
+      if (!Array.isArray(promises)) {
+        return reject(new TypeError(`${promises} is not iterable`));
+      }
+
+      promises.length === 0 && reject(new AggregateError('All promises were rejected'));
+
+      const reasons: any[] = [];
+      let count = 0;
+
+      promises.forEach((p, index) =>
+        MyPromise.resolve(p).then(resolve, err => {
+          reasons[index] = err;
+          count++;
+          count === promises.length && reject(new AggregateError(reasons));
+        })
+      );
+    });
+  }
 }
 
-// test
-const p = new MyPromise((resolve, reject) => {
-  resolve('hello');
-});
-const p2 = p.then(val => {
-  console.log('p1val', val);
-  // throw 'error';
-  return p2;
-})
-
-p2.then(
-  val => {
-    console.log('p2val',val);
-  },
-  err => {
-    console.log('p2err', err);
+module.exports = {
+  deferred() {
+    const res = {} as any;
+    res.promise = new MyPromise((resolve, reject) => {
+      res.resolve = resolve;
+      res.reject = reject;
+    });
+    return res;
   }
-);
+}

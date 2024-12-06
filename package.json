@@ -12,7 +12,8 @@
     "contribution-report": "for author in \"Tianyang Chen\" \"Cheong\" \"Guangwei Hu\" \"Yuting\" \"Yibin\"; do echo \"Author: $author\"; git log --author=\"$author\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"Lines added: %s, Lines removed: %s, Total lines: %s\\n\", add, subs, loc }'; echo; done",
     "nyc": "nyc --reporter=text --reporter=lcov ts-node -r tsconfig-paths/register -T src/server.ts",
     "prettier": "prettier --write \"src/**/*.{ts,js,json}\" \"tests/**/*.{ts,js,json}\"",
-    "format": "npm run prettier; npm run lint-fix"
+    "format": "npm run prettier; npm run lint-fix",
+    "promise-test": "promises-aplus-tests src/frontEnd/myPromise.js"
   },
   "dependencies": {
     "tsx": "^4.19.2"
@@ -24,6 +25,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.6.3",
     "prettier": "^3.3.3",
+    "promises-aplus-tests": "^2.1.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.3"
   }
