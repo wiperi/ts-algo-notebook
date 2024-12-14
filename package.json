@@ -3,8 +3,8 @@
     "test": "jest",
     "tsc": "tsc --project tsconfig.json",
     "ts-node": "ts-node -r tsconfig-paths/register",
-    "lint": "eslint 'src/**/*.{ts,js}'",
-    "lint-fix": "eslint --fix 'src/**/*.{ts,js}'",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "lint-fix": "eslint --fix \"src/**/*.{ts,js}\"",
     "start": "ts-node -r tsconfig-paths/register -T src/server.ts",
     "start-dev": "ts-node-dev -r tsconfig-paths/register -T src/server.ts",
     "cleanup-sync-request": "pkill -f node_modules/sync-rpc/lib/worker.js > /dev/null 2>&1",
@@ -16,9 +16,12 @@
     "promise-test": "promises-aplus-tests src/frontEnd/myPromise.js"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "prompt-sync": "^4.2.0",
     "tsx": "^4.19.2"
   },
   "devDependencies": {
+    "@types/prompt-sync": "^4.2.3",
     "@types/node": "^20.14.7",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
