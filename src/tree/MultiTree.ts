@@ -15,7 +15,10 @@ export class MultiTree {
   nodes: Map<number, __Node> = new Map();
 
   constructor(adjMap?: Map<number, number[]>) {
-    if (!adjMap?.size) this.root = null;
+    if (!adjMap || !adjMap.size) {
+      this.root = null;
+      return;
+    }
 
     this.root = new __Node(adjMap.keys().next().value);
 
@@ -54,6 +57,7 @@ export class MultiTree {
     const lines: string[] = [];
 
     function dfs(node: __Node, prefix: string, isLast: boolean): void {
+      if (!node) return;
       // Add the current node's value to the lines
       lines.push(`${prefix}${isLast ? '└─ ' : '├─ '}${node.val}`);
 
@@ -82,7 +86,7 @@ if (require.main === module) {
   adjMap.set(0, [1, 2, 3, 10, 11]);
   adjMap.set(1, [4, 5]);
   adjMap.set(2, [6, 7]);
-  adjMap.set(3, [8, 9, 12, 13, 1]);
+  adjMap.set(3, [8, 9, 12, 13]);
   const tree = new MultiTree(adjMap);
   // console.dir(tree, { depth: null });
   console.dir(tree.nodes, { depth: null });
