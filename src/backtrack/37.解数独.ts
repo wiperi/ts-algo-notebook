@@ -10,13 +10,13 @@ function solveSudoku(board) {
     let floor = Math.floor;
     let [r, c] = [floor(index / 9), floor(index % 9)];
 
-    // is solution?
+    // 是否找到解决方案？
     if (index === 9 * 9) {
       halt = true;
       return;
     }
 
-    // prune
+    // 剪枝：如果当前位置不是空的，从下一个位置开始
     if (board[r][c] !== '.') {
       index++;
       backtrack();
@@ -25,20 +25,20 @@ function solveSudoku(board) {
     }
 
     for (let val = 1; val <= 9; val++) {
-      // prune
+      // 剪枝：如果当前值不合法，跳过
       if (!isValid(r, c, val)) continue;
 
-      // update
+      // 更新状态
       index++;
       board[r][c] = String(val);
 
-      // make choice
+      // 做选择
       backtrack();
 
-      // only need to find one solution
+      // 只需要找到一个解决方案
       if (halt) return;
 
-      // undo
+      // 撤销状态
       board[r][c] = '.';
       index--;
     }
@@ -77,6 +77,6 @@ if (require.main === module) {
   solveSudoku(board);
 
   for (let row of board) {
-    console.log(row);
+    console.log(row.join(' '));
   }
 }
