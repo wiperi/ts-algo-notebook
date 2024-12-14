@@ -28,7 +28,7 @@ export class BiTree {
     });
 
     this.root = this.nodes[0] ?? null;
-    }
+  }
 
   // Change console.log behavior
   [util.inspect.custom]() {
@@ -66,11 +66,6 @@ export class BiTree {
 }
 
 if (require.main === module) {
-  if (require.main === module) {
-    const tree = new BiTree(Array.from({ length: 7 }, (_, i) => i + 1));
-    console.log(tree);
-  }
-
-  
-  console.log(res);
+  const tree = new BiTree(Array.from({ length: 7 }, (_, i) => i + 1));
+  console.log(tree);
 }
