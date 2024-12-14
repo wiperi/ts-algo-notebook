@@ -22,14 +22,26 @@ export class MultiTree {
     const q = [this.root];
     while (q.length) {
       const node = q.shift();
+
       this.nodes.set(node.val, node);
 
       const children = adjMap.get(node.val);
       if (children && children.length > 0) {
+        checkLoop.call(this, node, children);
+
         node.children = children.map(v => new __Node(v));
         q.push(...node.children);
       } else {
         node.children = null;
+      }
+    }
+
+    function checkLoop(node: __Node, children: number[]) {
+      const badVal = children.find(v => this.nodes.has(v));
+      if (badVal) {
+        throw new Error(
+          `Loop detected in adjacency map: ${node.val} -> ${badVal}, make sure all values are unique`
+        );
       }
     }
   }
@@ -70,9 +82,10 @@ if (require.main === module) {
   adjMap.set(0, [1, 2, 3, 10, 11]);
   adjMap.set(1, [4, 5]);
   adjMap.set(2, [6, 7]);
-  adjMap.set(3, [8, 9, 12, 13]);
+  adjMap.set(3, [8, 9, 12, 13, 1]);
   const tree = new MultiTree(adjMap);
-  console.dir(tree, { depth: null });
+  // console.dir(tree, { depth: null });
+  console.dir(tree.nodes, { depth: null });
   let res = MultiTree.printTree(tree.root);
   console.log(res);
 }
