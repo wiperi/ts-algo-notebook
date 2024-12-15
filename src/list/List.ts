@@ -1,4 +1,4 @@
-class ListNode<T = number> {
+export class ListNode<T = number> {
   val: T | null;
   next: ListNode<T> | null;
 
@@ -8,21 +8,23 @@ class ListNode<T = number> {
   }
 }
 
-class List<T> {
+export class List<T> {
   nodes: ListNode<T>[] = [];
   head: ListNode<T> | null = null;
 
   constructor();
   constructor(arr: T[]);
   constructor(arr?: T[]) {
-    arr?.filter((v, i) => {
-      this.nodes.push(new ListNode(v, null));
-      i === 0 && (this.head = this.nodes[i]);
-      return true;
-    }).filter((v, i) => {
-      this.nodes[i].next = this.nodes[i + 1] ?? null;
-      return true;
-    });
+    arr
+      ?.filter((v, i) => {
+        this.nodes.push(new ListNode(v, null));
+        i === 0 && (this.head = this.nodes[i]);
+        return true;
+      })
+      .filter((v, i) => {
+        this.nodes[i].next = this.nodes[i + 1] ?? null;
+        return true;
+      });
   }
 
   toString(): string {
@@ -63,46 +65,3 @@ class List<T> {
     this.tail()!.next = newNode;
   }
 }
-
-function reverseList(head: ListNode<number> | null): ListNode<number> | null {
-  if (head === null) {
-    return null;
-  }
-
-  if (head.next === null) {
-    return head;
-  }
-
-  const last = reverseList(head.next);
-
-  head.next.next = head;
-  head.next = null;
-
-  return last;
-}
-
-function reverseListIter(head: ListNode | null) {
-  if (head === null) return null;
-
-  let prev = null;
-  let curr = head;
-  let next = curr.next;
-
-  while (curr) {
-    next = curr.next;
-
-    curr.next = prev;
-
-    prev = curr;
-
-    if (!next) break;
-    curr = next;
-  }
-
-  return curr;
-}
-const l = new List([1, 2, 3, 4, 5]);
-
-l.head = reverseListIter(l.head);
-
-console.log(l.toString());
