@@ -6,16 +6,15 @@
 
 // @lc code=start
 function permute(nums: number[]): number[][] {
-    
   let res = [];
   let path = [];
 
   backtrack();
 
   return res;
-  
-  function backtrack() {
 
+  function backtrack() {
+    
     if (path.length === nums.length) {
       res.push(path.slice());
       return;
@@ -28,8 +27,6 @@ function permute(nums: number[]): number[][] {
       backtrack();
       path.pop();
     }
-    
   }
-};
+}
 // @lc code=end
-

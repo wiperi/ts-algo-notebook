@@ -6,7 +6,6 @@
 
 // @lc code=start
 function subsetsWithDup(nums: number[]): number[][] {
-    
   let path = [];
   let res = [];
 
@@ -14,17 +13,15 @@ function subsetsWithDup(nums: number[]): number[][] {
   backtrack(0);
 
   return res;
-  
 
   function backtrack(start: number) {
-
     console.log(path);
 
     res.push(path.slice());
 
     let used = new Set();
 
-    for (let i = start; i < nums.length; i++) {      
+    for (let i = start; i < nums.length; i++) {
       if (used.has(nums[i])) continue;
       used.add(nums[i]);
 
@@ -32,8 +29,6 @@ function subsetsWithDup(nums: number[]): number[][] {
       backtrack(i + 1);
       path.pop();
     }
-
   }
-};
+}
 // @lc code=end
-

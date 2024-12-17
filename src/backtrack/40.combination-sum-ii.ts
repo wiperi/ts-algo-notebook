@@ -8,8 +8,8 @@
 function combinationSum2(candidates: number[], target: number): number[][] {
   let res = [];
   let path = [];
-  let pathSum = 0
-  
+  let pathSum = 0;
+
   candidates.sort();
   backtrack(0);
 
@@ -38,6 +38,5 @@ function combinationSum2(candidates: number[], target: number): number[][] {
       path.pop();
     }
   }
-};
+}
 // @lc code=end
-

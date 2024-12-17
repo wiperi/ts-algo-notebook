@@ -6,7 +6,6 @@
 
 // @lc code=start
 function generateParenthesis(n: number): string[] {
-
   let path = [];
   // 左括号剩余数量，右括号剩余数量
   let [left, right] = [n, n];

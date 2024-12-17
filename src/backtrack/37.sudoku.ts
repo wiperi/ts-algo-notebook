@@ -1,3 +1,4 @@
+export {};
 /*
  * @lc app=leetcode.cn id=37 lang=typescript
  *
@@ -62,6 +63,7 @@ function solveSudoku(board) {
     return true;
   }
 }
+// @lc code=end
 
 if (require.main === module) {
   let board = [
@@ -82,5 +84,3 @@ if (require.main === module) {
     console.log(row.join(' '));
   }
 }
-
-// @lc code=end
