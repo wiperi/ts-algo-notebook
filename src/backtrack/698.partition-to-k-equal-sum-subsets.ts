@@ -3,9 +3,6 @@
  *
  * [698] 划分为k个相等的子集
  */
-
-// import { floor, sum } from "lodash";
-
 // @lc code=start
 function canPartitionKSubsets(nums: number[], k: number) {
   // 排除一些基本情况
