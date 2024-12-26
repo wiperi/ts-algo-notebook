@@ -21,7 +21,7 @@ class MyPromise {
     onRejected: (reason: any) => void;
   }[] = [];
 
-  constructor(executor: (resolve: any, reject: any) => void) {
+  constructor(func: (resolve: any, reject: any) => void) {
     const resolve = (value: any) => {
       if (this.state === S.PENDING) {
         this.state = S.FULFILLED;
@@ -44,7 +44,7 @@ class MyPromise {
     };
 
     try {
-      executor(resolve, reject);
+      func(resolve, reject);
     } catch (error) {
       reject(error);
     }
@@ -62,12 +62,12 @@ class MyPromise {
     const newPromise = new MyPromise((resolve, reject) => {
       /**
        * Resolve new promise based on the return value of onFulfilled or onRejected
-       * @param func onFulfilled or onRejected
+       * @param onSettled onFulfilled or onRejected
        */
-      const resolveNewPromise = (func: (value: any) => any) => {
+      const resolveNewPromise = (onSettled: (value: any) => any) => {
         asyncRun(() => {
           try {
-            const res = func(this.value);
+            const res = onSettled(this.value);
 
             if (res === newPromise) {
               throw new TypeError('Chaining cycle detected');
@@ -156,7 +156,7 @@ class MyPromise {
         MyPromise.resolve(p).then(res => {
           results[index] = res;
           count++;
-          count === promises.length && resolve(results);
+          if (count === promises.length) resolve(results);
         }, reject)
       );
     });
@@ -181,7 +181,7 @@ class MyPromise {
               value: val,
             };
             count++;
-            count === promises.length && resolve(results);
+            if (count === promises.length) resolve(results);
           },
           err => {
             results[index] = {
@@ -189,7 +189,7 @@ class MyPromise {
               reason: err,
             };
             count++;
-            count === promises.length && resolve(results);
+            if (count === promises.length) resolve(results);
           }
         )
       );
@@ -202,7 +202,7 @@ class MyPromise {
         return reject(new TypeError(`${promises} is not iterable`));
       }
 
-      promises.length === 0 && reject(new AggregateError('All promises were rejected'));
+      if (promises.length === 0) reject(new AggregateError('All promises were rejected'));
 
       const reasons: any[] = [];
       let count = 0;
@@ -211,7 +211,7 @@ class MyPromise {
         MyPromise.resolve(p).then(resolve, err => {
           reasons[index] = err;
           count++;
-          count === promises.length && reject(new AggregateError(reasons));
+          if (count === promises.length) reject(new AggregateError(reasons));
         })
       );
     });
