@@ -9,7 +9,7 @@ function findLength(nums1: number[], nums2: number[]): number {
   const n = nums1.length;
   const m = nums2.length;
 
-  // dp[i][j] = nums1[i..end] and nums2[j..end] 的最大公共子数组距离
+  // dp[i][j] = nums1[i..end] and nums2[j..end] 的最大公共子数组长度
   const dp: number[][] = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
   let ans = 0;
 
