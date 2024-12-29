@@ -41,9 +41,13 @@ function wordBreak(s: string, wordDict: string[]): boolean {
 };
 // @lc code=end
 
-// simple version without memo
 (function wordBreak(s: string, wordDict: string[]): boolean {
+ 
+  // let f(0) = wordBreak(s[0..end])
   
+  // state transition:
+  // f(0) = (s[0..] match the word) && f(word.length) for word in wordDict
+
   return dp(0);
 
   function dp(start) {
@@ -64,5 +68,3 @@ function wordBreak(s: string, wordDict: string[]): boolean {
     return res;
   }
 });
-
-export {};

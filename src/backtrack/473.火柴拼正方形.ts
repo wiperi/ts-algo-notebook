@@ -1,9 +1,14 @@
 /*
- * @lc app=leetcode.cn id=698 lang=typescript
+ * @lc app=leetcode.cn id=473 lang=typescript
  *
- * [698] 划分为k个相等的子集
+ * [473] 火柴拼正方形
  */
+
 // @lc code=start
+function makesquare(matchsticks: number[]): boolean {
+  return canPartitionKSubsets(matchsticks, 4);
+};
+
 function canPartitionKSubsets(nums: number[], k: number) {
   // 排除一些基本情况
   if (k > nums.length) return false;
@@ -68,5 +73,5 @@ function canPartitionKSubsets(nums: number[], k: number) {
     }
   }
 }
-
 // @lc code=end
+
