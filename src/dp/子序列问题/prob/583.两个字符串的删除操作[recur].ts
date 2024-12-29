@@ -48,7 +48,7 @@ if (require.main === module) {
 }
 
 (function minDistance(s1: string, s2: string): number {
-  // let f(i, j) = minDistance(s1[i..end], s2[j..end])
+  // let f(i, j) = minDistance(s1[i..], s2[j..])
   // assume f(i, j) known
   // for i - 1, j - 1
   // there are 3 options: delete s1[i - 1] or delete s1[j - 1] or do nothing
