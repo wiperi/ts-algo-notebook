@@ -4,7 +4,7 @@
  * [2] 两数相加
  */
 
-import { List, ListNode } from '@/list/List';
+import { List, ListNode } from '@/linkedList/List';
 
 // @lc code=start
 /**
