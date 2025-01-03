@@ -11,6 +11,7 @@ function lengthOfLongestSubstring(s: string): number {
 
   if (s.length <= 1) return s.length;
 
+  // 双闭区间
   let [left, right] = [0, 0];
 
   let window = new Set();
