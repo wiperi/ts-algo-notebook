@@ -1,9 +1,16 @@
+/**
+ * Promise 的执行原理
+ * Promise 的构造函数（new Promise）中的代码是同步执行的。
+ * Promise.then、Promise.catch 或 Promise.finally 的回调函数会被推入微任务队列。
+ */
+
 enum S {
   PENDING = 'pending',
   FULFILLED = 'fulfilled',
   REJECTED = 'rejected',
 }
 
+// 将回调函数添加到微任务队列
 function asyncRun(func: () => void) {
   if (typeof queueMicrotask === 'function') {
     return queueMicrotask(func);
@@ -13,6 +20,7 @@ function asyncRun(func: () => void) {
 }
 
 class MyPromise {
+
   state: S = S.PENDING;
   value: any;
 
@@ -21,7 +29,12 @@ class MyPromise {
     onRejected: (reason: any) => void;
   }[] = [];
 
+  /**
+   * @param func 用户输入的回调函数，带有resolve和reject两个参数，用于定义如何解决当前Promise。
+   */
   constructor(func: (resolve: any, reject: any) => void) {
+
+    // resolve 和 reject 函数同步的更新Promise的状态
     const resolve = (value: any) => {
       if (this.state === S.PENDING) {
         this.state = S.FULFILLED;
@@ -51,6 +64,8 @@ class MyPromise {
   }
 
   then(onFulfilled?: (value: any) => any, onRejected?: (reason: any) => any) {
+
+    // 确保 onFulfilled, onRejected 的类型正确
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : val => val;
     onRejected =
       typeof onRejected === 'function'
@@ -60,9 +75,11 @@ class MyPromise {
           };
 
     const newPromise = new MyPromise((resolve, reject) => {
+
       /**
-       * Resolve new promise based on the return value of onFulfilled or onRejected
-       * @param onSettled onFulfilled or onRejected
+       * 将 onSettled 添加到微任务队列中等待执行。
+       * 根据 onFulfilled 或 onRejected 的返回值 resolve then()返回的Promise。
+       * @param onSettled onFulfilled 或 onRejected
        */
       const resolveNewPromise = (onSettled: (value: any) => any) => {
         asyncRun(() => {
@@ -71,13 +88,17 @@ class MyPromise {
 
             if (res === newPromise) {
               throw new TypeError('Chaining cycle detected');
-            } else if (res instanceof MyPromise) {
-              // Extract value from the returned Promise and use it to resolve the new Promise.
-              // res.then(onFulfilled = resolve, onRejected = reject)
-              res.then(resolve, reject);
-            } else {
-              resolve(res);
             }
+            
+            // 从返回的 Promise 中提取值，并使用该值来解决新的 Promise。
+            // 等同于 res.then(val => resolve(val), reason => reject(reason));
+            if (res instanceof MyPromise) {
+              res.then(resolve, reject);
+              return;
+            }
+
+            resolve(res);
+
           } catch (error) {
             reject(error);
           }
@@ -89,6 +110,17 @@ class MyPromise {
       } else if (this.state === S.REJECTED) {
         resolveNewPromise(onRejected);
       } else if (this.state === S.PENDING) {
+
+        // executor 中的 resolve(x) / reject(x) 尚未被执行,
+        // 将 onFulfilled 和 onRejected 添加到队列中等待执行。
+
+        // example:
+        // new Promise((resovle, reject) => {
+        //   setTimeout(() => {
+        //     resolve(666);
+        //   }, 1000);
+        // })
+
         this.callbacks.push({
           onFulfilled: () => resolveNewPromise(onFulfilled),
           onRejected: () => resolveNewPromise(onRejected),
