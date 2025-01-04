@@ -30,9 +30,9 @@ class MyPromise {
   }[] = [];
 
   /**
-   * @param func 用户输入的回调函数，带有resolve和reject两个参数，用于定义如何解决当前Promise。
+   * @param executor 初始化Promise的回调函数，带有resolve和reject两个参数，用于定义如何解决当前Promise。
    */
-  constructor(func: (resolve: any, reject: any) => void) {
+  constructor(executor: (resolve: (value: any) => void, reject: (reason: any) => void) => void) {
 
     // resolve 和 reject 函数同步的更新Promise的状态
     const resolve = (value: any) => {
@@ -57,7 +57,7 @@ class MyPromise {
     };
 
     try {
-      func(resolve, reject);
+      executor(resolve, reject);
     } catch (error) {
       reject(error);
     }
