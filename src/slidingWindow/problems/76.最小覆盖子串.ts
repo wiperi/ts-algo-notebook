@@ -60,3 +60,5 @@ function minWindow(s: string, t: string): string {
 if (require.main === module) {
   console.log(minWindow('aba', 'b'));
 }
+
+export {}

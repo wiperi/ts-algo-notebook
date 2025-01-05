@@ -43,3 +43,5 @@ function invertTree(root: TreeNode | null): TreeNode | null {
 };
 // @lc code=end
 
+
+export {}

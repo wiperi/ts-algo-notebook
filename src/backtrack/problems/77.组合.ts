@@ -30,3 +30,5 @@ function combine(n: number, k: number): number[][] {
   }
 }
 // @lc code=end
+
+export {}

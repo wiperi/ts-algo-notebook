@@ -32,3 +32,5 @@ function subsetsWithDup(nums: number[]): number[][] {
   }
 }
 // @lc code=end
+
+export {}

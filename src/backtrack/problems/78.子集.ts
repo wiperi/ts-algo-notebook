@@ -26,3 +26,5 @@ function subsets(nums: number[]): number[][] {
   }
 }
 // @lc code=end
+
+export {}

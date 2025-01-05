@@ -42,3 +42,5 @@ if (require.main === module) {
   subsets([1, 2, 3]);
   console.log(t);
 }
+
+export {}

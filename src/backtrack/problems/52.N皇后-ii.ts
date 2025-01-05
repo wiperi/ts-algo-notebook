@@ -36,3 +36,5 @@ function totalNQueens(n: number): number {
   }
 }
 // @lc code=end
+
+export {}

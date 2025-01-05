@@ -51,3 +51,5 @@ if (require.main === module) {
 
   return _.max(dp);
 })
+
+export {}

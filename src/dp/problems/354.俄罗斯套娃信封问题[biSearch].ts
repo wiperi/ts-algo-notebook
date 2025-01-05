@@ -50,3 +50,5 @@ function biSearch(arr: number[], target: number): number {
   return left;
 }
 // @lc code=end
+
+export {}

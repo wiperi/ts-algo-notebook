@@ -71,3 +71,5 @@ if (require.main === module) {
   console.log(input);
   console.log(res);
 }
+
+export {}

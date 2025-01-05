@@ -40,3 +40,5 @@ if (require.main === module) {
   let res = numsSameConsecDiff(2, 7);
   console.log(res);
 }
+
+export {}

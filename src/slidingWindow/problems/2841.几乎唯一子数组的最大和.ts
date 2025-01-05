@@ -53,3 +53,5 @@ if (require.main === module) {
   console.log(maxSum([10,9,7,1,7,6,9,9,9], 3, 3))
 }
 
+
+export {}

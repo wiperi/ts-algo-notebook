@@ -39,3 +39,4 @@ new Promise(resolve => {
 
 // 5
 console.log('script end');  
+export {}

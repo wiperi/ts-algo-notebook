@@ -38,3 +38,4 @@ if (require.main === module) {
   let res = findSubsequences([4,6,7,7])
   console.log(res);
 }
+export {}

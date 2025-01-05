@@ -31,3 +31,5 @@ function maxEnvelopes(envelopes: number[][]): number {
   return _.max(dp);
 }
 // @lc code=end
+
+export {}

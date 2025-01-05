@@ -62,3 +62,5 @@ if (require.main === module) {
     [1, 1, 0, 1, 0, 1, 0, 0, 1, 0],
   ]);
 }
+
+export {}

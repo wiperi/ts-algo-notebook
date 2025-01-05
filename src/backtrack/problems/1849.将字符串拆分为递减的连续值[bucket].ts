@@ -43,3 +43,4 @@ function splitString(s: string): boolean {
 if (require.main === module) {
   console.log(splitString("10009998")); // Output should be true or false based on the function logic
 }
+export {}

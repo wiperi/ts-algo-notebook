@@ -48,3 +48,5 @@ function mergeSort(nums: number[]): number[] {
 if (require.main === module) {
   console.log(mergeSort([-2, 3, -5]));
 }
+
+export {}

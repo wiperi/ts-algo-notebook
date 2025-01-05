@@ -35,3 +35,5 @@ function searchInsert(nums: number[], target: number): number {
 };
 // @lc code=end
 
+
+export {}

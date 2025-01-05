@@ -25,3 +25,5 @@ function generate(numRows: number): number[][] {
   return dp;
 }
 // @lc code=end
+
+export {}

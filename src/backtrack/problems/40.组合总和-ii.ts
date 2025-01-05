@@ -40,3 +40,5 @@ function combinationSum2(candidates: number[], target: number): number[][] {
   }
 }
 // @lc code=end
+
+export {}

@@ -35,3 +35,5 @@ function numDistinct(s: string, t: string): number {
   }
 }
 // @lc code=end
+
+export {}

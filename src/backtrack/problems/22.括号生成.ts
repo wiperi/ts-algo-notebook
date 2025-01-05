@@ -45,3 +45,5 @@ function generateParenthesis(n: number): string[] {
   }
 }
 // @lc code=end
+
+export {}

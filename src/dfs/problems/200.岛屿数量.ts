@@ -34,3 +34,5 @@ function numIslands(grid: string[][]): number {
   }
 }
 // @lc code=end
+
+export {}

@@ -38,3 +38,5 @@ function maxVowels(s: string, k: number): number {
   return res;
 }
 // @lc code=end
+
+export {}

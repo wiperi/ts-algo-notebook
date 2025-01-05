@@ -78,3 +78,5 @@ if (require.main === module) {
   ]);
   console.log(res);
 }
+
+export {}

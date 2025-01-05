@@ -49,3 +49,5 @@ function permuteUnique(nums: number[]): number[][] {
 }
 
 // @lc code=end
+
+export {}

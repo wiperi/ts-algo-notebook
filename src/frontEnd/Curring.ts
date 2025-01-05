@@ -31,3 +31,5 @@ if (require.main === module) {
   const numCheck = typeCheckerGenerator('number');
   console.log(numCheck('hello'));
 }
+
+export {}

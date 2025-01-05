@@ -47,3 +47,5 @@ if (require.main === module) {
   let res = grayCode(3);
   console.log(res);
 }
+
+export {}

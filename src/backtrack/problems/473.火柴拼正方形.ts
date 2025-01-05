@@ -75,3 +75,5 @@ function canPartitionKSubsets(nums: number[], k: number) {
 }
 // @lc code=end
 
+
+export {}

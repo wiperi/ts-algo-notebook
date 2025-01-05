@@ -37,3 +37,5 @@ function canPartition(nums: number[]): boolean {
 }
 // @lc code=end
 
+
+export {}

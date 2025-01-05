@@ -48,3 +48,5 @@ if (require.main === module) {
   let t = new BiTree([1, 2, 2, null, 3, null, 3]);
   console.log(isSymmetric(t.root));
 }
+
+export {}

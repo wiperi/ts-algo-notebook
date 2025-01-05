@@ -38,3 +38,5 @@ console.log(7);
 // 7
 
 // 1 2 7 5 6 3
+
+export {}

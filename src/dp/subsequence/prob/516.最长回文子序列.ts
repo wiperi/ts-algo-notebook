@@ -31,3 +31,5 @@ if (require.main === module) {
   let res = longestPalindromeSubseq('bbbab');
   console.log(res);
 }
+
+export {}

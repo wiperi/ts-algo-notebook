@@ -32,3 +32,5 @@ function countArrangement(n: number): number {
   }
 }
 // @lc code=end
+
+export {}

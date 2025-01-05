@@ -50,3 +50,4 @@ if (require.main === module) {
   let res = restoreIpAddresses('19999')
   console.log(res);
 }
+export {}

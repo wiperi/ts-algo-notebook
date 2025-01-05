@@ -30,3 +30,5 @@ function permute(nums: number[]): number[][] {
   }
 }
 // @lc code=end
+
+export {}

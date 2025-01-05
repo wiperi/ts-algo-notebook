@@ -43,3 +43,5 @@ if (require.main === module) {
   let res = lengthOfLIS([10, 9, 2, 5, 3, 0, 7, 11, 101, 18]);
   console.log(res);
 }
+
+export {}

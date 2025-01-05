@@ -32,3 +32,4 @@ if (require.main === module) {
   let res = rob([2,1,1,2])
   console.log(res);
 }
+export {}
