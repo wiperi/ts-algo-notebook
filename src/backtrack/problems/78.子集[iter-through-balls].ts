@@ -4,7 +4,7 @@
  * [78] 子集
  */
 
-import { BiTree, TreeNode } from "@/tree/BiTreeGeneric";
+import { BiTree, TreeNode } from "@/tree/BiTree";
 
 // @lc code=start
 let t = new BiTree(['root']);

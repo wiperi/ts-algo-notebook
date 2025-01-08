@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=226 lang=typescript
+ * @lc app=leetcode.cn id=108 lang=typescript
  *
- * [226] 翻转二叉树
+ * [108] 将有序数组转换为二叉搜索树
  */
 
 import { TreeNode } from "@/tree/BiTree";
@@ -21,27 +21,27 @@ import { TreeNode } from "@/tree/BiTree";
  * }
  */
 
-function invertTree(root: TreeNode | null): TreeNode | null {
-
-  t(root);
-
-  return root;
+function sortedArrayToBST(nums: number[]): TreeNode | null {
   
+  return build(0, nums.length - 1);
 
-  function t(root: TreeNode) {
-    if (root === null) return;
-    if(root.left === null && root.right === null) return;
+  function build(left: number, right: number) {
 
-    
-    t(root.left)
-    t(root.right)
-    
-    let temp = root.right
-    root.right = root.left
-    root.left = temp
+    if ((left <= right) === false) {
+      return null;
+    }
+
+    let mid = Math.floor((left + right) / 2)
+
+    let root = new TreeNode(nums[mid])
+
+    root.left = build(left, mid - 1);
+    root.right = build(mid + 1, right);
+
+    return root;
   }
+
 };
 // @lc code=end
-
 
 export {}

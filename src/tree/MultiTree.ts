@@ -1,12 +1,12 @@
 import util from 'node:util';
 
 export class __Node {
-  val: number;
+  val: any;
   children: __Node[];
 
-  constructor(val?: number, children?: __Node[]) {
-    this.val = val ?? 0;
-    this.children = children ?? null;
+  constructor(val?: any, children?: __Node[]) {
+    this.val = val;
+    this.children = children ?? [];
   }
 }
 
@@ -14,36 +14,34 @@ export class MultiTree {
   root: __Node;
   nodes: Map<number, __Node> = new Map();
 
-  constructor(adjMap?: Map<number, number[]>) {
-    if (!adjMap || !adjMap.size) {
-      this.root = null;
+  constructor(edges?: Map<any, any[]>) {
+    if (!edges || !edges.size) {
+      this.root = new __Node();
       return;
     }
 
-    this.root = new __Node(adjMap.keys().next().value);
+    this.root = new __Node(edges.keys().next().value);
 
-    const q = [this.root];
-    while (q.length) {
-      const node = q.shift();
+    const que = [this.root];
+    while (que.length) {
+      const node = que.shift();
 
       this.nodes.set(node.val, node);
 
-      const children = adjMap.get(node.val);
-      if (children && children.length > 0) {
-        checkLoop.call(this, node, children);
+      const childValInputs = edges.get(node.val);
+      if (childValInputs && childValInputs.length > 0) {
+        checkLoop.call(this, node, childValInputs);
 
-        node.children = children.map(v => new __Node(v));
-        q.push(...node.children);
-      } else {
-        node.children = null;
+        node.children = childValInputs.map(v => new __Node(v));
+        que.push(...node.children);
       }
     }
 
-    function checkLoop(node: __Node, children: number[]) {
-      const badVal = children.find(v => this.nodes.has(v));
-      if (badVal) {
+    function checkLoop(node: __Node, children: any[]) {
+      const duplicatedVal = children.find(v => this.nodes.has(v));
+      if (duplicatedVal) {
         throw new Error(
-          `Loop detected in adjacency map: ${node.val} -> ${badVal}, make sure all values are unique`
+          `Loop detected in adjacency map: ${node.val} -> ${duplicatedVal}, make sure all values are unique`
         );
       }
     }
@@ -55,6 +53,12 @@ export class MultiTree {
 
   static printTree(root: __Node): string {
     const lines: string[] = [];
+
+    // Start the DFS traversal from the root node
+    dfs(root, '', true);
+
+    // Join all lines into a single string
+    return lines.join('\n');
 
     function dfs(node: __Node, prefix: string, isLast: boolean): void {
       if (!node) return;
@@ -72,22 +76,17 @@ export class MultiTree {
         });
       }
     }
-
-    // Start the DFS traversal from the root node
-    dfs(root, '', true);
-
-    // Join all lines into a single string
-    return lines.join('\n');
   }
 }
 
 if (require.main === module) {
-  const adjMap = new Map<number, number[]>();
-  adjMap.set(0, [1, 2, 3, 10, 11]);
-  adjMap.set(1, [4, 5]);
-  adjMap.set(2, [6, 7]);
-  adjMap.set(3, [8, 9, 12, 13]);
-  const tree = new MultiTree(adjMap);
+  const tree = new MultiTree(new Map([
+    [1, [2,3,4, 5]],
+    [5,[6,7,undefined]],
+    [undefined, [8,9]],
+    [9, [null]],
+    [null, ['hello', ['world']]]
+  ]))
   // console.dir(tree, { depth: null });
   console.dir(tree.nodes, { depth: null });
   let res = MultiTree.printTree(tree.root);

@@ -27,6 +27,6 @@ if __name__ == "__main__":
     
     # Get the directory from the command line argument
     src_directory = sys.argv[1]
-    print(src_directory)
+    print('Scanning dir: \n', src_directory)
     
     append_export_to_ts_files(src_directory)

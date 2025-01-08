@@ -4,7 +4,7 @@
  * [236] 二叉树的最近公共祖先
  */
 
-import { TreeNode } from '@/tree/BiTreeGeneric';
+import { TreeNode } from '@/tree/BiTree';
 
 // @lc code=start
 /**

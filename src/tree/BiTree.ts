@@ -1,12 +1,12 @@
 import * as util from 'util';
 
 export class TreeNode {
-  val: number;
+  val: any;
   left: TreeNode | null;
   right: TreeNode | null;
 
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = val === undefined ? 0 : val;
+  constructor(val?: any, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val;
     this.left = left ?? null;
     this.right = right ?? null;
   }
@@ -16,18 +16,32 @@ export class BiTree {
   root: TreeNode;
   nodes: TreeNode[] = [];
 
-  constructor(template?: number[]) {
-    template?.forEach((v, i) => (this.nodes[i] = new TreeNode(v)));
+  constructor(iterable?: any[]) {
+    if (iterable === undefined || iterable.length === 0) {
+      this.root = new TreeNode();
+      this.nodes[0] = this.root;
+      return;
+    }
+
+    iterable.forEach((v, i) => {
+      if (v === null) {
+        this.nodes[i] = null;
+      } else {
+        this.nodes[i] = new TreeNode(v)
+      }
+    });
 
     this.nodes.forEach((v, i) => {
+      if (v === null) return;
+
       const left = 2 * i + 1;
       const right = 2 * i + 2;
 
-      if (left < template.length) v.left = this.nodes[left];
-      if (right < template.length) v.right = this.nodes[right];
+      if (left < iterable.length) v.left = this.nodes[left];
+      if (right < iterable.length) v.right = this.nodes[right];
     });
 
-    this.root = this.nodes[0] ?? null;
+    this.root = this.nodes[0];
   }
 
   // Change console.log behavior
@@ -47,7 +61,7 @@ export class BiTree {
 
     // 递归遍历树，按层级打印
     function printNode(node: TreeNode | null, indent: string = ''): void {
-      if (!node) return;
+      if (node === null) return;
 
       // 先打印右子树
       if (node.right) {

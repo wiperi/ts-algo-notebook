@@ -4,7 +4,7 @@
  * [101] 对称二叉树
  */
 
-import { BiTree, TreeNode } from '@/tree/BiTreeGeneric';
+import { BiTree, TreeNode } from '@/tree/BiTree';
 
 // @lc code=start
 /**
