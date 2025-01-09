@@ -1,26 +1,26 @@
 import util from 'node:util';
 
-export class __Node {
+export class _Node {
   val: any;
-  children: __Node[];
+  children: _Node[];
 
-  constructor(val?: any, children?: __Node[]) {
+  constructor(val?: any, children?: _Node[]) {
     this.val = val;
     this.children = children ?? [];
   }
 }
 
 export class MultiTree {
-  root: __Node;
-  nodes: Map<number, __Node> = new Map();
+  root: _Node;
+  nodes: Map<number, _Node> = new Map();
 
   constructor(edges?: Map<any, any[]>) {
     if (!edges || !edges.size) {
-      this.root = new __Node();
+      this.root = new _Node();
       return;
     }
 
-    this.root = new __Node(edges.keys().next().value);
+    this.root = new _Node(edges.keys().next().value);
 
     const que = [this.root];
     while (que.length) {
@@ -32,12 +32,12 @@ export class MultiTree {
       if (childValInputs && childValInputs.length > 0) {
         checkLoop.call(this, node, childValInputs);
 
-        node.children = childValInputs.map(v => new __Node(v));
+        node.children = childValInputs.map(v => new _Node(v));
         que.push(...node.children);
       }
     }
 
-    function checkLoop(node: __Node, children: any[]) {
+    function checkLoop(node: _Node, children: any[]) {
       const duplicatedVal = children.find(v => this.nodes.has(v));
       if (duplicatedVal) {
         throw new Error(
@@ -51,7 +51,7 @@ export class MultiTree {
     return MultiTree.printTree(this.root);
   }
 
-  static printTree(root: __Node): string {
+  static printTree(root: _Node): string {
     const lines: string[] = [];
 
     // Start the DFS traversal from the root node
@@ -60,7 +60,7 @@ export class MultiTree {
     // Join all lines into a single string
     return lines.join('\n');
 
-    function dfs(node: __Node, prefix: string, isLast: boolean): void {
+    function dfs(node: _Node, prefix: string, isLast: boolean): void {
       if (!node) return;
       // Add the current node's value to the lines
       lines.push(`${prefix}${isLast ? '└─ ' : '├─ '}${node.val}`);
