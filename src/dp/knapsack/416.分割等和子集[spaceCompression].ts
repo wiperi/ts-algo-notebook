@@ -3,7 +3,7 @@
  *
  * [416] 分割等和子集
  */
-
+import _ from 'lodash';
 // @lc code=start
 function canPartition(nums: number[]): boolean {
   
