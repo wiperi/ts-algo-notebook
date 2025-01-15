@@ -6,6 +6,32 @@
 
 // @lc code=start
 function change(amount: number, coins: number[]): number {
+
+  let dp = Array.from({ length: coins.length + 1 }, () => Array(amount + 1).fill(0));
+
+  for (let i = 0; i <= coins.length; i++) {
+    dp[i][0] = 1;
+  }
+  dp[0][0] = 0;
+
+  for (let i = 1; i <= coins.length; i++) {
+    for (let j = 1; j <= amount; j++) {
+      let val = coins[i - 1];
+
+      if (val > j) {
+        dp[i][j] = dp[i - 1][j];
+      } else {
+        dp[i][j] = dp[i - 1][j] + dp[i][j - val];
+      }
+    }
+  }
+
+  return dp[coins.length][amount];
+}
+// @lc code=end
+
+// 递归
+(function change(amount: number, coins: number[]): number {
   return dp(coins.length, amount);
 
   /**
@@ -29,5 +55,6 @@ function change(amount: number, coins: number[]): number {
     const val = coins[i - 1];
     return dp(i, amount - val) + dp(i - 1, amount);
   }
-}
-// @lc code=end
+});
+
+export {}

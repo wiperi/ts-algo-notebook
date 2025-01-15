@@ -39,3 +39,5 @@ function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): Li
 };
 // @lc code=end
 
+
+export {}
