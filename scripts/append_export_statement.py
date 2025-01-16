@@ -1,5 +1,6 @@
 import os
 import sys
+import argparse
 
 def append_export_to_ts_files(path: str):
     if os.path.isfile(path):
@@ -24,12 +25,14 @@ def append_export_to_ts_files(path: str):
             targets.append(file_path)
 
 
+    # Check if there are more than 10 targets and ask for user confirmation
     if len(targets) > 10:
         print("Modification list:")
         print('\n'.join(targets))
-        print('Total: ', len(targets))
-        if input('Do you want to continue? y/n\n') == 'n':
-            print('Aborted')
+        print('Total:', len(targets))
+        proceed = input('Do you want to continue? (yes/no): ').strip().lower()
+        if proceed != 'yes':
+            print('Operation cancelled.')
             sys.exit(0)
 
     for file_path in targets:
@@ -39,12 +42,11 @@ def append_export_to_ts_files(path: str):
                 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python appendExport <directory>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Append 'export' to TypeScript files that don't have it.")
+    parser.add_argument("src_dir", help="Source directory to search for TypeScript files.")
+    args = parser.parse_args()
     
-    # Get the directory from the command line argument
-    src_directory = sys.argv[1]
+    src_directory = args.src_dir
     print('Scanning dir: \n', src_directory)
     
     append_export_to_ts_files(src_directory)
