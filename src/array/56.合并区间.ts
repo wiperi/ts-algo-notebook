@@ -16,46 +16,32 @@ function merge(intervals: number[][]): number[][] {
   // }
   // add last one
 
-  if (intervals.length === 0) {
-    return [];
-  }
-
-  let res = [];
-
-  // 简化 overlap 的判定
   intervals.sort((a, b) => {
     return a[0] - b[0];
-  });
+  })
 
-  let preMin = intervals[0][0];
-  let preMax = intervals[0][1];
-  let min, max;
+
+  let res = [];
+  let prev = intervals[0];
   for (let i = 1; i < intervals.length; i++) {
-    min = intervals[i][0];
-    max = intervals[i][1];
-
-    if (isOverlap(preMin, preMax, min, max)) {
-      // merge them
-      preMin = Math.min(preMin, min);
-      preMax = Math.max(preMax, max);
+    if (overlap(prev, intervals[i])) {
+      prev = [prev[0], Math.max(prev[1], intervals[i][1])];
     } else {
-      // update res
-      res.push([preMin, preMax]);
-      preMin = intervals[i][0];
-      preMax = intervals[i][1];
+      res.push(prev.slice());
+      prev = intervals[i];
     }
   }
 
-  res.push([preMin, preMax]);
+  res.push(prev.slice());
 
   return res;
 
-  function isOverlap(preMin, preMax, min, max) {
-    // preMin always <= min
-    if (min >= preMin && min <= preMax) return true;
-    if (max >= preMin && max <= preMax) return true;
+  function overlap(a, b): boolean {
+    if (a[1] >= b[0]) return true
     return false;
   }
-}
+};
 // @lc code=end
+
+
 export {}

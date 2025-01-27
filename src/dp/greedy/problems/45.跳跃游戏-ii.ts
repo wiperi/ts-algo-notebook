@@ -46,3 +46,5 @@ function jump(nums: number[]): number {
     return res;
   }
 })
+
+export {}

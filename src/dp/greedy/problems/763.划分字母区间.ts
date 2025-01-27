@@ -78,3 +78,5 @@ function partitionLabels(s: string): number[] {
   // console.log(partition)
   return partition.map(p => p.length);
 })
+
+export {}
