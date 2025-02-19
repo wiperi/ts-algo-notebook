@@ -23,9 +23,10 @@ function searchInsert(nums: number[], target: number): number {
     }
   }
 
-  // 此时只有两种情况
+  // 退出while的之前 lo == hi
+  // 退出之后，此时只有两种情况
   // target > mid val, lo = hi + 1
-  // tar < mid val, hi = lo - 1
+  // target < mid val, hi = lo - 1
   // 这两种情况下，都应该返回 lo
   return lo;
 
