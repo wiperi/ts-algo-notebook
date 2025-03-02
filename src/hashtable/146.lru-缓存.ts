@@ -65,3 +65,4 @@ class LRUCache {
  * obj.put(key,value)
  */
 // @lc code=end
+export {};
