@@ -4,7 +4,7 @@
  * [2] 两数相加
  */
 
-import { List, ListNode } from '@/linkedList/List';
+import { LinkedList, ListNode } from '@/linkedList/LinkedList';
 
 // @lc code=start
 /**
@@ -50,7 +50,7 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
 // @lc code=end
 
 if (require.main === module) {
-  let res = addTwoNumbers(new List([1, 8, 6]).head, new List([1, 2, 3]).head);
+  let res = addTwoNumbers(new LinkedList([1, 8, 6]).head, new LinkedList([1, 2, 3]).head);
   while (res) {
     console.log(res.val);
     res = res.next

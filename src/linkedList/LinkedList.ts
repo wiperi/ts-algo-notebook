@@ -8,7 +8,7 @@ export class ListNode<T = number> {
   }
 }
 
-export class List<T> {
+export class LinkedList<T> {
   nodes: ListNode<T>[] = [];
   head: ListNode<T> | null = null;
 

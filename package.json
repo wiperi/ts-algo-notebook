@@ -12,10 +12,10 @@
     "format": "npm run prettier; npm run lint-fix"
   },
   "dependencies": {
-    "@datastructures-js/deque": "^1.0.4",
-    "@datastructures-js/priority-queue": "^5.4.0",
-    "@datastructures-js/queue": "^4.2.3",
+    "data-structure-typed": "^2.0.3",
+    "datastructures-js": "^13.0.0",
     "lodash": "^4.17.21",
+    "mnemonist": "^0.40.3",
     "prompt-sync": "^4.2.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2"
