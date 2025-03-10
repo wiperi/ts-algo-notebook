@@ -4,7 +4,7 @@
  * [102] 二叉树的层序遍历
  */
 
-import { TreeNode } from "@/tree/BiTree";
+import { TreeNode } from '@/tree/BiTree';
 
 // @lc code=start
 /**
@@ -21,31 +21,32 @@ import { TreeNode } from "@/tree/BiTree";
  * }
  */
 function levelOrder(root: TreeNode | null): number[][] {
-  if (root === null) return [];
 
+  if (root === null) {
+    return [];
+  }
+
+  const queue = [root];
   const res = [];
 
-  const q = [root];
+  while (queue.length != 0) {
 
-  while (q.length !== 0) {
-    const levelSize = q.length;
-
+    const levelSize = queue.length;
     const level = [];
 
     for (let i = 0; i < levelSize; i++) {
-      const node = q.shift();
-      level.push(node.val);
+      const curr = queue.shift();
+      level.push(curr.val);
 
-      if (node.left !== null) q.push(node.left)
-      if (node.right !== null) q.push(node.right);
+      if (curr.left) queue.push(curr.left);
+      if (curr.right) queue.push(curr.right);
     }
 
-    res.push(level.slice());  
+    res.push(level.slice());
   }
 
   return res;
-};
+}
 // @lc code=end
 
-
-export {}
+export {};
