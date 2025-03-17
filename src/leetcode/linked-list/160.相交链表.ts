@@ -4,7 +4,7 @@
  * [160] 相交链表
  */
 
-import { ListNode } from "@/linkedList/LinkedList";
+import { ListNode } from "@/adt/LinkedList";
 
 // @lc code=start
 /**
