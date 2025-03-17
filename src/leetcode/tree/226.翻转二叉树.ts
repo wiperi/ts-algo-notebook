@@ -4,8 +4,6 @@
  * [226] 翻转二叉树
  */
 
-import { TreeNode } from "@/tree/BiTree";
-
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -23,25 +21,37 @@ import { TreeNode } from "@/tree/BiTree";
 
 function invertTree(root: TreeNode | null): TreeNode | null {
 
-  t(root);
+  if (root == null) {
+    return null;
+  }
+
+  if (root.left || root.right) {
+    let temp = root.left;
+    root.left = root.right;
+    root.right = temp;
+  }
+  
+  root.left = invertTree(root.left);
+  root.right = invertTree(root.right);
 
   return root;
-  
-
-  function t(root: TreeNode) {
-    if (root === null) return;
-    if(root.left === null && root.right === null) return;
-
-    
-    t(root.left)
-    t(root.right)
-    
-    let temp = root.right
-    root.right = root.left
-    root.left = temp
-  }
-};
+}
 // @lc code=end
 
+(function invertTree(root: TreeNode | null): TreeNode | null {
 
-export {}
+  if (root == null) {
+    return null;
+  }
+  
+  root.left = invertTree(root.left);
+  root.right = invertTree(root.right);
+
+  if (root.left || root.right) {
+    let temp = root.left;
+    root.left = root.right
+    root.right = temp;
+  }
+
+  return root;
+})

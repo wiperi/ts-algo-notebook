@@ -3,45 +3,57 @@
  *
  * [322] 零钱兑换
  */
-// @lc code=start
-function coinChange(coins, amount) {
-  // 状态转移方程：
-  // dp(amount) = 0, 当 amount == 0 时
-  // dp(amount) = -1, 当 amount < 0 时
-  // dp(amount) = min(dp(amount - coin) + 1), 当 coin <= amount 时
-  
-  // 题目要求的最终结果是 dp(amount)
-  let memo = Array(amount + 1).fill(undefined);
-  memo[0] = 0;
-  return dp(coins, amount);
 
-  // 定义：要凑出金额 n，至少要 dp(coins, n) 个硬币
-  function dp(coins, amount) {
-    // base case
-    if (amount === 0) return 0;
-    if (amount < 0) return -1;
+// Recursive
+function coinChange(coins: number[], amount: number): number {
+  // Assume f(0)..f(n - 1) is known.
+  // How about f(n).
+  // f(n) = min(f(n - coin 1), f(n - coin 2)...f(n - coin N)) + 1;
 
-    if (memo[amount] !== undefined) return memo[amount];
+  return dp(amount);
 
-    let res = Number.MAX_SAFE_INTEGER;
+  function dp(n): number {
+    if (n < 0) return -1;
+    if (n == 0) return 0;
+
+    let res = Infinity;
+
     for (let coin of coins) {
-      // 计算子问题的结果
-      let subRes = dp(coins, amount - coin);
-      // 子问题无解则跳过
-      if (subRes === -1) continue;
-      // 在子问题中选择最优解，然后加一
-      res = Math.min(res, subRes + 1);
+      if (dp(n - coin) === -1) continue;
+      res = Math.min(res, dp(n - coin) + 1);
     }
 
-    memo[amount] =  res === Number.MAX_SAFE_INTEGER ? -1 : res;
-    return memo[amount];
+    return res == Infinity ? -1 : res;
   }
 }
-// @lc code=end
 
-if (require.main === module) {
-  let res = coinChange([1, 2, 5], 11);
-  console.log(res);
+// Recursive + Memo
+{
+  // @lc code=start
+  function coinChange(coins: number[], amount: number): number {
+
+    let memo = Array(amount).fill(undefined);
+
+    return dp(amount);
+
+    function dp(n): number {
+      if (n < 0) return -1;
+      if (n == 0) return 0;
+
+      if (memo[n] != undefined) return memo[n];
+
+      let res = Infinity;
+
+      for (let coin of coins) {
+        if (dp(n - coin) === -1) continue;
+        res = Math.min(res, dp(n - coin) + 1);
+      }
+
+      memo[n] = res == Infinity ? -1 : res;
+      return memo[n];
+    }
+  }
+  // @lc code=end
 }
 
 export {};

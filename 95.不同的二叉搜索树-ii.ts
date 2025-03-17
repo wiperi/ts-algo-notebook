@@ -4,7 +4,7 @@
  * [95] 不同的二叉搜索树 II
  */
 
-import { TreeNode } from "@/tree/BiTree";
+import { TreeNode } from "@/adt/BiTree";
 import { BST, BSTNode } from "data-structure-typed";
 import { BinarySearchTree } from "datastructures-js";
 

@@ -4,7 +4,7 @@
  * [78] 子集
  */
 
-import { BiTree, TreeNode } from "@/tree/BiTree";
+import { BiTree, TreeNode } from "@/adt/BiTree";
 
 // @lc code=start
 let t = new BiTree(['root']);

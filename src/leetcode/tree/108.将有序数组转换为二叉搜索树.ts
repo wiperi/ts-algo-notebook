@@ -4,7 +4,7 @@
  * [108] 将有序数组转换为二叉搜索树
  */
 
-import { TreeNode } from "@/tree/BiTree";
+import { TreeNode } from "@/adt/BiTree";
 
 // @lc code=start
 /**

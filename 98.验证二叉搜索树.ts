@@ -1,10 +1,8 @@
 /*
- * @lc app=leetcode.cn id=530 lang=typescript
+ * @lc app=leetcode.cn id=98 lang=typescript
  *
- * [530] 二叉搜索树的最小绝对差
+ * [98] 验证二叉搜索树
  */
-
-import { TreeNode } from "@/adt/BiTree";
 
 // @lc code=start
 /**
@@ -21,24 +19,27 @@ import { TreeNode } from "@/adt/BiTree";
  * }
  */
 
-function getMinimumDifference(root: TreeNode | null): number {
+function isValidBST(root: TreeNode | null): boolean {
+  let res = true;
 
-  let minDiff = 10 ** 5;
-  let prev = 10 ** 5;
-  traverse(root);
+  t(root, -Infinity, Infinity);
 
-  return minDiff;
+  return res;
 
-  function traverse(root: TreeNode) {
+  function t(root, min, max) {
     if (root == null) return;
 
-    traverse(root.left);
+    if (res === false) return;
 
-    minDiff = Math.min(minDiff, Math.abs(prev - root.val));
-    prev = root.val;
+    if (root.val <= min || root.val >= max) {
+      res = false;
+      return;
+    }
 
-    traverse(root.right);
+    t(root.left, min, root.val);
+    t(root.right, root.val, max);
+
+    return;
   }
-};
+}
 // @lc code=end
-
