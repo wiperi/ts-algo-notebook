@@ -1,5 +1,7 @@
 tt*
 
+.lcpr_data/
+
 package-lock.json
 node_modules
 build
