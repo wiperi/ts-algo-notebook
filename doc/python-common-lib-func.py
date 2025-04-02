@@ -5,13 +5,37 @@ from random import randint, choice, shuffle, sample, random
 from math import gcd, factorial, sqrt, ceil, floor, inf, pi
 from array import array
 from itertools import permutations, combinations, product
-from functools import lru_cache, reduce, partial
+from functools import cache, lru_cache, partial, reduce
 
 # Standard library functions
-from builtins import range, sum, min, max, sorted, enumerate, zip, map, filter, reversed
-
+from builtins import (
+    all,
+    sum,
+    min,
+    max,
+    sorted,
+    range,
+    enumerate,
+    zip,
+    map,
+    filter,
+    reversed,
+)
 
 # Example code for each algorithm or data structure
+
+
+def demo_map():
+    l = [{"key": key, "val": val} for key, val in enumerate([i**2 for i in range(5)])]
+    # Using map correctly to transform each dictionary in the list
+    res = list(map(lambda a: a["val"], l))
+    print("Mapped values:", res)
+
+
+def demo_reduce():
+    l = [1, 2, 3]
+    res = reduce(lambda a, b: a + b, l, 0)
+    print("Reduced: ", res)
 
 
 def demo_list():
@@ -62,8 +86,11 @@ def demo_counter():
 
 
 def demo_defaultdict():
+    # defaultdict automatically creates default values for missing keys
+    # avoiding KeyError when accessing non-existent keys
+    # useful for graphs, frequency counters, and grouping data
     graph = defaultdict(list)
-    graph[0].append(1)
+    graph[0].append(1)  # No KeyError even though key 0 didn't exist before
     print("Defaultdict:", graph)
 
 
