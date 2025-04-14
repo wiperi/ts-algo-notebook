@@ -31,16 +31,19 @@ function solveNQueens(n: number): string[][] {
   }
 
   function isValid(r, c) {
-    for (let i = 0; i < n; i++) {
-      // 检查行和列
+    // 检查列
+    for (let i = 0; i < r; i++) {
       if (board[i][c] === 'Q') return false;
-      if (board[r][i] === 'Q') return false;
+    }
 
-      // 检查对角线
-      for (let j = 0; j < n; j++) {
-        if (i + j === r + c && board[i][j] === 'Q') return false;
-        if (i - j === r - c && board[i][j] === 'Q') return false;
-      }
+    // 检查左上对角线
+    for (let i = r - 1, j = c - 1; i >= 0 && j >= 0; i--, j--) {
+      if (board[i][j] === 'Q') return false;
+    }
+
+    // 检查右上对角线
+    for (let i = r - 1, j = c + 1; i >= 0 && j < n; i--, j++) {
+      if (board[i][j] === 'Q') return false;
     }
 
     return true;
@@ -59,4 +62,4 @@ if (require.main === module) {
 }
 // @lc code=end
 
-export {}
+export {};

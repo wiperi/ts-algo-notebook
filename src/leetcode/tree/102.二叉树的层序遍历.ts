@@ -4,7 +4,7 @@
  * [102] 二叉树的层序遍历
  */
 
-import { TreeNode } from '@/tree/BiTree';
+import { TreeNode } from '@/adt/BiTree';
 
 // @lc code=start
 /**
