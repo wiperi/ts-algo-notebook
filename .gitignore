@@ -1,6 +1,6 @@
 tt*
-
 .lcpr_data/
+/[0-9]*
 
 package-lock.json
 node_modules
