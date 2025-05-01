@@ -4,7 +4,7 @@ from bisect import bisect_left, bisect_right, insort, bisect
 from random import randint, choice, shuffle, sample, random
 from math import gcd, factorial, sqrt, ceil, floor, inf, pi
 from array import array
-from itertools import permutations, combinations, product
+from itertools import permutations, combinations, product, accumulate
 from functools import cache, lru_cache, partial, reduce
 
 # Standard library functions
@@ -142,6 +142,22 @@ def demo_random():
     random.shuffle(arr)
     print("Shuffled Array:", arr)
     print("Random Integer:", random.randint(1, 10))
+
+
+def demo_accumulate():
+    # Basic accumulate (cumulative sum)
+    nums = [1, 2, 3, 4, 5]
+    cumulative_sum = list(accumulate(nums))
+    print("Cumulative Sum:", cumulative_sum)  # [1, 3, 6, 10, 15]
+    
+    # Accumulate with custom function (product)
+    cumulative_product = list(accumulate(nums, lambda x, y: x * y))
+    print("Cumulative Product:", cumulative_product)  # [1, 2, 6, 24, 120]
+    
+    # Accumulate with max function
+    data = [3, 1, 4, 1, 5, 9, 2]
+    running_max = list(accumulate(data, max))
+    print("Running Maximum:", running_max)  # [3, 3, 4, 4, 5, 9, 9]
 
 
 def demo_math():
