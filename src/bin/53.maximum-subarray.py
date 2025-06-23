@@ -8,20 +8,18 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+from math import inf
 # @lcpr-template-end
 # @lc code=start
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         n = len(nums)
-
-        dp = [n for n in nums]
-
-        for i in range(1, n):
-            dp[i] = max(nums[i], dp[i - 1] + nums[i])
-
-        return max(dp)
-            
+        mxsum = -inf
+        for i in range(n):
+            for j in range(i + 1):
+                s = sum(nums[j: i + 1])
+                mxsum = max(mxsum, s)
+        return mxsum
 
 
          

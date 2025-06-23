@@ -7,9 +7,10 @@
 
 
 # @lcpr-template-start
-from math import ceil
+from math import ceil, inf
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+
+from numpy import append
 # @lcpr-template-end
 # @lc code=start
 class Solution:
@@ -41,28 +42,18 @@ class Solution:
                 break
 
             k -= step
-
+        
+        nums1.extend([inf for _ in range(2)])
+        nums2.extend([inf for _ in range(2)])
         if (m + n) % 2 == 1:
-            if a == n:
-                return nums2[b]
-            elif b == m:
-                return nums1[a]
-            else:
-                return min(nums1[a], nums2[b])
+            return min(nums1[a], nums2[b])
         else:
             res = []
-            i = 0
-            while i < 2 and a < n:
+            for _ in range(2):
                 res.append(nums1[a])
-                a += 1
-                i += 1
-
-            i = 0
-            while i < 2 and b < m:
                 res.append(nums2[b])
+                a += 1
                 b += 1
-                i += 1
-
             res.sort()
             return (res[0] + res[1]) / 2
         

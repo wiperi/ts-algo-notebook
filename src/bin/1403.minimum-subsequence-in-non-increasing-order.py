@@ -8,7 +8,7 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+from lct import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 class Solution:

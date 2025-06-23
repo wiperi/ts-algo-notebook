@@ -1,10 +1,11 @@
 from collections import deque, Counter, defaultdict, OrderedDict
 from heapq import heappush, heappop, heapify, nlargest, nsmallest
 from bisect import bisect_left, bisect_right, insort, bisect
+import itertools
 from random import randint, choice, shuffle, sample, random
 from math import gcd, factorial, sqrt, ceil, floor, inf, pi
 from array import array
-from itertools import permutations, combinations, product, accumulate
+from itertools import permutations, combinations, product, accumulate, groupby
 from functools import cache, lru_cache, partial, reduce
 
 # Standard library functions

@@ -8,7 +8,7 @@
 
 # @lcpr-template-start
 from typing import Counter, List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+from lct import ListNode, TreeNode
 
 
 # @lcpr-template-end
@@ -40,21 +40,10 @@ class Solution:
         l, r = 0, m
 
         while r < n:
-            if win[ind(s[r])] == -1:
-                diff -= 1
-            elif win[ind(s[r])] == 0:
-                diff += 1
-
             win[ind(s[r])] += 1
-
-            if win[ind(s[l])] == 1:
-                diff -= 1
-            elif win[ind(s[l])] == 0:
-                diff += 1
-
             win[ind(s[l])] -= 1
 
-            if diff == 0:
+            if all([v == 0 for v in win]):
                 res.append(l + 1)
 
             r += 1

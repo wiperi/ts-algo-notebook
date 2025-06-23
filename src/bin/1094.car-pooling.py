@@ -8,37 +8,29 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+from lct import ListNode, TreeNode
+
+
 # @lcpr-template-end
 # @lc code=start
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        '''
-        merge interval
-        '''
+        n = max(trips, key=lambda a: a[2])[2] + 1
 
-        trips.sort(key=lambda a:a[1])
+        diff = [0] * n
+        for num, start, end in trips:
+            diff[start] += num
+            diff[end] -= num
 
-        i = 0
-        n = len(trips)
+        arr = [0] * n
+        arr[0] = diff[0]
+        for i in range(1, n):
+            arr[i] = arr[i - 1] + diff[i]
 
-        while i < n:
+        return max(arr) <= capacity
 
-            lmax = trips[i][0]
 
-            j = i + 1
-            while j < n and trips[j][1] < trips[i][2]:
-                lmax += trips[j][0]
-                j += 1
-
-            if lmax > capacity:
-                return False
-            
-            i += 1
-            
-        return True
 # @lc code=end
-
 
 
 #
@@ -51,4 +43,3 @@ class Solution:
 # @lcpr case=end
 
 #
-

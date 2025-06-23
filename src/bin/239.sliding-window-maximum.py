@@ -16,45 +16,26 @@ from src.adt.py.leetcodeType import ListNode, TreeNode
 # @lc code=start
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        
+        st = []
         n = len(nums)
-
-        nums = [-1 * v for v in nums]
-        pq = []
-        heapify(pq)
-        freq = defaultdict(int)
-        for i in range(k):
-            freq[nums[i]] += 1
-            heappush(pq, nums[i])
-
         res = []
-        res.append(pq[0])
-        # print(pq)
 
-        l, r = 0, k
+        for r in range(n):
+            while st and nums[r] > nums[st[-1]]:
+                st.pop()
+            st.append(r)
 
-        while r < n:
-            # when the deleting value is maximum and only one left in window
-            # then pq pop
-            # if nums[l] == pq[0] and freq[nums[l]] == 1:
-            #     while pq and pq[0] == nums[l]:
-            #         heappop(pq)
-            freq[nums[l]] -= 1
-            while pq and freq[pq[0]] == 0:
-                heappop(pq)
+            if r < k - 1:
+                continue
+            
+            res.append(nums[st[0]])
 
-            freq[nums[r]] += 1
-            heappush(pq, nums[r])
+            l = r - k + 1
+            if nums[l] == nums[st[0]]:
+                st.pop(0)
 
-            # print(pq)
-            # print(freq)
-                
-            res.append(pq[0])
+        return res
 
-            l += 1
-            r += 1
-
-        return [-1 * v for v in res]
 
 
 # @lc code=end

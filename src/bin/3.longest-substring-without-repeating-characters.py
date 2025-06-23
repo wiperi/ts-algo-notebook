@@ -8,29 +8,26 @@
 
 # @lcpr-template-start
 from typing import Counter, List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        n = len(s)
-        maxlen = 0
+        win = set()
 
-        def hasDup(s):
-            used = set()
-            for ch in s:
-                if ch in used:
-                    return True
-                used.add(ch)
-            return False
-        
-        for i in range(n):
-            for j in range(i, n):
-                sub = s[i:j+1]
-                if not hasDup(sub):
-                    maxlen = max(maxlen , len(sub))
+        l = r = 0
+        mlen = 0
+        while r < len(s):
+            add = s[r]
+            while add in win:
+                win.discard(s[l])
+                l += 1
 
-        return maxlen
+            win.add(add)
+            r += 1
+
+            mlen = max(mlen, r - l)
+
+        return mlen
 
 
 

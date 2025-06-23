@@ -8,7 +8,6 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 class Solution:
@@ -21,18 +20,18 @@ class Solution:
         def swap(i, j):
             nums[i], nums[j] = nums[j], nums[i]
 
-        pa, pb = 0, 0
-
+        l = 0
         for i in range(n):
             if nums[i] == 0:
-                swap(pa, i)
-                if pa < pb:
-                    swap(i, pb)
-                pa += 1
-                pb += 1
-            elif nums[i] == 1:
-                swap(pb, i)
-                pb += 1
+                swap(i, l)
+                l += 1
+
+        for i in range(l, n):
+            if nums[i] == 1:
+                swap(i, l)
+                l += 1
+
+        return
 
 # @lc code=end
 

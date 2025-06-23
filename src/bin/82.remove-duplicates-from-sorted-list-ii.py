@@ -8,7 +8,7 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
+from lct import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 # Definition for singly-linked list.
@@ -21,18 +21,15 @@ class Solution:
         dummy = ListNode(0, head)
 
         p = dummy
-
         while p and p.next and p.next.next:
-
-            if p.next.val != p.next.next.val:
-                p = p.next
+            if p.next.val == p.next.next.val:
+                dup_val = p.next.val
+                j = p.next.next
+                while j and j.val == dup_val:
+                    j = j.next
+                p.next = j
             else:
-                dupVal = p.next.val
-                k = p.next
-                while k and k.val == dupVal:
-                    k = k.next
-                # k = next unique
-                p.next = k
+                p = p.next
 
         return dummy.next
 

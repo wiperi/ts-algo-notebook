@@ -10,50 +10,46 @@
 from curses.ascii import isdigit
 import re
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
 
 
 # @lcpr-template-end
 # @lc code=start
 class Solution:
     def decodeString(self, s: str) -> str:
+        n = len(s)
+        p = 0
+
         st = []
 
-        n = len(s)
-        i = 0
-
-        def getNumber():
-            nonlocal i
-            start = i
-            i += 1
-            while i < n and s[i].isdigit():
+        def getDigit(i):
+            number = ''
+            while s[i].isdigit():
+                number += s[i]
                 i += 1
-            return int(s[start: i])
-
-
-        while i < n:
-            if s[i].isdigit():
-                repeat = getNumber()
+            nonlocal p
+            p = i
+            return int(number)
+        
+        while p < n:
+            if s[p].isdigit():
+                repeat = getDigit(p)
                 st.append(repeat)
-            elif s[i].isalpha() or s[i] == '[':
-                st.append(s[i])
-                i += 1
-            elif s[i] == ']':
-                substr = ''
-                while st[-1] != '[':
-                    substr = st.pop() + substr
+                st.append(s[p])
+            elif s[p].isalpha():
+                st.append(s[p])
+            elif s[p] == ']':
+                part = ''
+                while st and st[-1] != '[':
+                    part = st.pop() + part
                 st.pop()
                 repeat = st.pop()
-                st.append(repeat * substr)
-                i += 1
+                part = repeat * part
+                st.append(part)
 
-        # Combine all strings in the stack
-        result = ''
-        for item in st:
-            result += item
-        
-        return result
-            
+            p += 1
+
+        return ''.join(st)
+
 
 
 # Test case
@@ -61,7 +57,7 @@ class Solution:
 
 
 # @lc code=end
-
+print(213 is int)
 
 #
 # @lcpr case=start

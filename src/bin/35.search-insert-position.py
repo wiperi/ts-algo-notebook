@@ -8,12 +8,22 @@
 
 # @lcpr-template-start
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)
+
+        while l < r:
+            mid = (l + r) // 2
+            v = nums[mid]
+
+            if target >= v:
+                l = mid + 1
+            else:
+                r = mid
         
+        return r
 # @lc code=end
 
 

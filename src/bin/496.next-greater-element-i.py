@@ -9,7 +9,6 @@
 # @lcpr-template-start
 from collections import defaultdict
 from typing import List, Optional
-from src.adt.py.leetcodeType import ListNode, TreeNode
 # @lcpr-template-end
 # @lc code=start
 class Solution:
